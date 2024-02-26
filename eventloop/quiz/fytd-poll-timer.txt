@@ -1,3 +1,11 @@
 - Explain the order of execution in terms of the event loop for eventloop/poll_timer.js.
+
+setTimeout() is scheduled to happen in the timer section of the event loop. The Async operation takes in a callback to hand to pending callbacks, and then conducts file I/O. So, when Async is called the callback passed in is called first, and there is a print statement. Then afterwards the timer finishes and the timer function is called.
+
 - Will the order of execution change if the delay in the while loop is changed from 10s to 150s? Why or why not?
+
+No. Making the timer last longer doesn't change the timing of the event loop. The while loop timer is supposed to be the delay before the timer function is called.
+
 - Will the order of execution change if timeout is changed to 0? Why or why not?
+
+Yes. If the timer is short enough the timer function might execute before the worker thread is done, meaning that the timer is queued up to occur before anything is placed into pending callbacks.

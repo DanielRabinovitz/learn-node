@@ -1,1 +1,8 @@
 - In eventloop/poll.js, what will be the order of execution? Briefly explain the order of execution w.r.t the event loop phases.
+
+This is what's printed out:
+foo
+done
+Read Error
+
+"Read Error" comes from an async file I/O operation, meaning it's not part of the event loop until the file I/O operation is finished on a worker thread and ready to be used. foo() and console.log() are printed before read error because they are part of the event loop. Until the worker thread is done the synchronous events get executed earlier.

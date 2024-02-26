@@ -1,1 +1,12 @@
 - In eventloop/timer.js, what will be the order of execution? Briefly explain the order of execution w.r.t the event loop phases.
+
+This is the console output:
+
+foo
+baz
+foo
+baz
+2 : bar
+1 : bar
+
+The event loop starts when the main thread is completed. The main thread is calling foo() twice, which calls baz() twice as well. Inside of foo(), bar() is put inside of the event loop using setTimeout(), so the bar() callbacks happen after foo() and bar().
